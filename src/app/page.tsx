@@ -1,65 +1,94 @@
 import Image from "next/image";
+import { HERO_CONTENT, CASE_STUDIES, GATEWAY_CONTENT } from "@/lib/content";
+import CaseStudyCard from "@/components/ui/case-study-card";
+import TelemetryTerminal from "@/components/ui/telemetry-terminal";
+import FadeIn from "@/components/ui/fade-in";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <main className="min-h-screen bg-[#0A0A0A] selection:bg-white/20 text-white">
+      <div className="max-w-3xl mx-auto px-6 py-16 space-y-16">
+        {/* HERO */}
+        <section>
+          <div className="relative w-32 h-32 md:w-40 md:h-40 mb-12">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/assets/logo_transparent.png"
+              alt="LuKul Atelier"
+              fill
+              className="object-contain"
+              priority
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+          </div>
+          <p className="font-medium text-xl">{HERO_CONTENT.name}</p>
+          <p className="text-white/50 text-sm font-mono tracking-widest uppercase mt-2">
+            {HERO_CONTENT.title}
+          </p>
+          <p className="text-white/80 text-xl leading-relaxed mt-8 max-w-2xl">
+            {HERO_CONTENT.thesis}
+          </p>
+        </section>
+
+        {/* TERMINAL */}
+        <section className="relative z-20 pb-12">
+          <p className="text-xs text-white/30 font-mono mb-4">
+            // SYSTEM_LOG: MULTI_AGENT_ORCHESTRATION
+          </p>
+          <FadeIn>
+            <TelemetryTerminal />
+          </FadeIn>
+        </section>
+
+        {/* ── THE ARCHITECTURE (Case Studies) with Enforced Skew ── */}
+        <section
+          aria-label="Case studies"
+          className="relative py-24 md:py-32 z-0"
+        >
+          {/* THE GHOST SKEW (Force-rendered) */}
+          <div className="absolute inset-0 bg-[#0D1512] border-y border-[#1A2E24] -skew-y-3 origin-center scale-[1.05] shadow-2xl -z-10" />
+
+          {/* Un-skewed content container */}
+          <div className="relative z-10 max-w-2xl mx-auto px-6">
+            <div className="space-y-20">
+              {CASE_STUDIES.map((study, i) => (
+                <div id={study.id} key={study.id} className="scroll-mt-32">
+                  <FadeIn delay={i === 0 ? 0 : 0.1}>
+                    <CaseStudyCard study={study} />
+                  </FadeIn>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* GATEWAY */}
+        <section className="relative z-20 pt-16">
+          <FadeIn>
+            <div className="bg-white/[0.02] border border-[#1A2E24] p-8 rounded-sm">
+              <p className="text-xs text-white/30 font-mono uppercase tracking-widest mb-6">
+                // GATEWAY: ENGAGEMENT_PROTOCOL
+              </p>
+              <p className="text-sm text-white/70 leading-relaxed">
+                {GATEWAY_CONTENT.availability}
+              </p>
+              <p className="text-xs text-white/40 font-mono mt-3">
+                {GATEWAY_CONTENT.alignment}
+              </p>
+              <p className="text-xs text-white/30 font-mono mt-1">
+                Min. engagement: {GATEWAY_CONTENT.minimumEngagement}
+              </p>
+              <a
+                href={GATEWAY_CONTENT.email}
+                className="inline-flex items-center gap-2 text-sm text-white hover:text-[#4A7C59] transition-colors mt-6 font-mono"
+              >
+                {GATEWAY_CONTENT.contactLabel}
+              </a>
+              <p className="text-xs text-white/20 font-mono mt-6 pt-6 border-t border-[#1A2E24]">
+                {GATEWAY_CONTENT.signature}
+              </p>
+            </div>
+          </FadeIn>
+        </section>
+      </div>
+    </main>
   );
 }

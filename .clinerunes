@@ -1,0 +1,34 @@
+# ELITE ENGINEERING PROTOCOL - TECHNICAL DOSSIER
+
+## 1. Architectural Boundaries
+
+- **Framework:** Next.js 15+ (App Router strictly).
+- **RSC Default:** ALL components are React Server Components by default.
+- **Client Boundaries:** Any component utilizing `framer-motion`, `useState`, `useEffect`, or DOM events MUST be isolated in a separate file with the `"use client"` directive at line 1. NEVER pollute page layouts with client directives.
+- **Routing:** This is a Single Page Application (SPA). All content lives on `/`. Navigation relies on smooth-scroll anchor links.
+
+## 2. Styling Engine (Tailwind v4)
+
+- **NO `tailwind.config.ts`.** This is a v4 project.
+- All design tokens, custom colors, and fonts MUST be defined using `@theme` directives exclusively inside `src/app/globals.css`.
+- **Aesthetic:** Monochrome, pure brutalism. `#0A0A0A` background. No gradients, no drop shadows unless strictly required for glassmorphism.
+
+## 3. Typography
+
+- **Primary:** `Geist` (var(--font-geist-sans)).
+- **Technical/Mono:** `Geist_Mono` (var(--font-geist-mono)).
+- DO NOT import or suggest Inter, JetBrains, or any other fonts. We utilize the Vercel-native font stack.
+
+## 4. Code Quality & Types
+
+- **Strict TypeScript:** `any` is strictly forbidden. Define interfaces for all data structures.
+- **Accessibility (a11y):** All interactive elements must have proper `aria-labels`. Dynamic text (like the Terminal component) MUST use `aria-live="polite"`.
+- **SEO:** Inject structured `Person` JSON-LD data into the root layout.
+
+## 5. Execution Mandate
+
+- Think before you code. Provide a brief architectural summary of the file you are about to create/modify before writing the code.
+- Write modular code. Do not build massive 500-line components.
+- Zero fluff. No placeholder text like "Lorem Ipsum". Use precise, technical domain language.
+- **Deterministic Dependencies:** Before any `npm run build`, you MUST verify `package-lock.json` consistency. If new packages are added, ensure they do not introduce peer dependency conflicts.
+- **Memory Safety:** Any `useEffect` hook utilizing timers (`setTimeout`, `setInterval`) or event listeners MUST implement a cleanup function to prevent memory leaks and phantom state updates.
