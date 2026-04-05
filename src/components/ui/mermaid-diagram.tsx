@@ -6,6 +6,7 @@
 // AGENTS.md memory safety: timeout IDs collected via useRef, cleared on unmount.
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface MermaidDiagramProps {
@@ -20,6 +21,7 @@ export default function MermaidDiagram({ graph }: MermaidDiagramProps) {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [svgContent, setSvgContent] = useState<string>("");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -72,6 +74,7 @@ export default function MermaidDiagram({ graph }: MermaidDiagramProps) {
 
     // Defer slightly to ensure DOM is fully hydrated
     timeoutRef.current = setTimeout(render, 0);
+    setMounted(true);
 
     return () => {
       cancelled = true;
@@ -121,58 +124,62 @@ export default function MermaidDiagram({ graph }: MermaidDiagramProps) {
         }}
       />
 
-      {/* Lightbox modal — same pattern as image-lightbox.tsx */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            ref={overlayRef}
-            className="fixed inset-0 z-[60] flex items-center justify-center backdrop-blur-md"
-            style={{ backgroundColor: "rgba(10,10,10,0.82)" }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            onClick={(e) => {
-              // Click-outside: close if clicking the overlay itself
-              if (e.target === overlayRef.current) setIsOpen(false);
-            }}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Expanded architecture diagram"
-          >
-            <motion.div
-              className="relative rounded-sm overflow-hidden border border-[#1A2E24] shadow-2xl bg-[#0D1512] w-[100vw] h-[100vh] md:w-[90vw] md:h-[90vh]"
-              initial={{ scale: 0.88, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.88, opacity: 0 }}
-              transition={{
-                type: "spring",
-                stiffness: 320,
-                damping: 28,
-                mass: 0.8,
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close button */}
-              <button
-                onClick={() => setIsOpen(false)}
-                className="absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-black/60 text-white/60 hover:text-white hover:bg-black/80 transition-colors font-mono text-xs border border-white/10"
-                aria-label="Close diagram lightbox"
+      {/* Lightbox modal — portalled to document.body to escape parent stacking context */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                ref={overlayRef}
+                className="fixed inset-0 z-[60] flex items-center justify-center backdrop-blur-md"
+                style={{ backgroundColor: "rgba(10,10,10,0.82)" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                onClick={(e) => {
+                  // Click-outside: close if clicking the overlay itself
+                  if (e.target === overlayRef.current) setIsOpen(false);
+                }}
+                role="dialog"
+                aria-modal="true"
+                aria-label="Expanded architecture diagram"
               >
-                ✕
-              </button>
+                <motion.div
+                  className="relative rounded-sm overflow-hidden border border-[#1A2E24] shadow-2xl bg-[#0D1512] w-[100vw] h-[100vh] md:w-[90vw] md:h-[90vh]"
+                  initial={{ scale: 0.88, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.88, opacity: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 320,
+                    damping: 28,
+                    mass: 0.8,
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Close button */}
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-black/60 text-white/60 hover:text-white hover:bg-black/80 transition-colors font-mono text-xs border border-white/10"
+                    aria-label="Close diagram lightbox"
+                  >
+                    ✕
+                  </button>
 
-              {/* Full-size diagram — overflow-auto enables native pinch-to-zoom & panning on mobile */}
-              <div
-                ref={lightboxContainerRef}
-                className="w-full h-full overflow-auto p-4 md:p-8 touch-pan-x touch-pan-y"
-                // biome-ignore lint/security/noDangerouslySetInnerHtml: mermaid SVG is server-generated, not user input
-                dangerouslySetInnerHTML={{ __html: svgContent }}
-              />
-            </motion.div>
-          </motion.div>
+                  {/* Full-size diagram — overflow-auto enables native pinch-to-zoom & panning on mobile */}
+                  <div
+                    ref={lightboxContainerRef}
+                    className="w-full h-full overflow-auto p-4 md:p-8 touch-pan-x touch-pan-y grid place-items-center"
+                    // biome-ignore lint/security/noDangerouslySetInnerHtml: mermaid SVG is server-generated, not user input
+                    dangerouslySetInnerHTML={{ __html: svgContent }}
+                  />
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
     </>
   );
 }
