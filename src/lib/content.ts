@@ -36,7 +36,7 @@ export const GATEWAY_CONTENT = {
     "Currently accepting select architectural consulting engagements.",
   alignment:
     "Optimized for asynchronous execution across US (EST/PST) and EU (CET) timezones.",
-  minimumEngagement: "$75/hr",
+  minimumEngagement: "$50/hr",
   contactLabel: "Initiate Handshake ↘",
   email: "mailto:milos@kulpinski.tech",
   signature:
