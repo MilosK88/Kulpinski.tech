@@ -44,7 +44,7 @@ export default function Home() {
           className="relative py-24 md:py-32 z-0"
         >
           {/* THE GHOST SKEW (Force-rendered) */}
-          <div className="absolute inset-0 bg-[#0D1512] border-y border-[#1A2E24] -skew-y-3 origin-center scale-[1.05] shadow-2xl -z-10" />
+          <div className="absolute inset-0 bg-[#0D1512] border-y border-[#1A2E24] -skew-y-1 md:-skew-y-3 origin-center scale-100 md:scale-[1.05] shadow-2xl -z-10 overflow-hidden" />
 
           {/* Un-skewed content container */}
           <div className="relative z-10 max-w-2xl mx-auto px-6">

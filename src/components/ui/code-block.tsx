@@ -33,7 +33,7 @@ export default async function CodeBlock({ code, lang }: CodeBlockProps) {
       {/* Highlighted code — shiki inlines all styles, zero client JS.
           pre.shiki margin/padding/bg reset is handled in globals.css */}
       <div
-        className="p-4 text-sm leading-relaxed overflow-x-auto"
+        className="p-4 text-[11px] md:text-sm leading-relaxed overflow-x-auto [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent pb-2"
         style={{ fontFamily: "var(--font-geist-mono)" }}
         // biome-ignore lint/security/noDangerouslySetInnerHtml: shiki output is server-generated, not user input
         dangerouslySetInnerHTML={{ __html: html }}

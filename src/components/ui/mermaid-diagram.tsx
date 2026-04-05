@@ -79,11 +79,16 @@ export default function MermaidDiagram({ graph }: MermaidDiagramProps) {
 
   return (
     <div
-      ref={containerRef}
-      className="w-full overflow-x-auto rounded-sm border border-white/10 p-4"
-      style={{ backgroundColor: "#0a0a0a", minHeight: "120px" }}
-      role="img"
-      aria-label="Architecture diagram"
-    />
+      className="w-full overflow-x-auto rounded-sm border border-white/10 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent pb-2"
+      style={{ backgroundColor: "#0a0a0a" }}
+    >
+      <div
+        ref={containerRef}
+        className="min-w-[600px] md:min-w-0 p-4"
+        style={{ minHeight: "120px" }}
+        role="img"
+        aria-label="Architecture diagram"
+      />
+    </div>
   );
 }

@@ -66,8 +66,7 @@ export default function ImageLightbox({
           aria-label={`Expanded view: ${alt}`}
         >
           <motion.div
-            className="relative rounded-sm overflow-hidden border border-[#1A2E24] shadow-2xl bg-[#0D1512]"
-            style={{ width: "90vw", height: "90vh" }}
+            className="relative rounded-sm overflow-hidden border border-[#1A2E24] shadow-2xl bg-[#0D1512] w-[100vw] h-[100vh] md:w-[90vw] md:h-[90vh]"
             initial={{ scale: 0.88, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.88, opacity: 0 }}
@@ -93,7 +92,7 @@ export default function ImageLightbox({
               src={src}
               alt={alt}
               fill
-              className="object-contain p-8 md:p-12"
+              className="object-contain p-2 md:p-8 lg:p-12"
               sizes="90vw"
               priority
             />
