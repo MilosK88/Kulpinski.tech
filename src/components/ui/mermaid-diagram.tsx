@@ -113,14 +113,22 @@ export default function MermaidDiagram({ graph }: MermaidDiagramProps) {
       {/* Card thumbnail — scales naturally to container width, click to enlarge */}
       <div
         ref={containerRef}
-        className="w-full rounded-sm border border-white/10 p-4 cursor-pointer transition-opacity hover:opacity-80 hover:ring-1 hover:ring-white/20"
+        className="w-full rounded-sm border border-white/10 p-4 cursor-pointer md:cursor-default transition-opacity hover:opacity-80 md:hover:opacity-100 hover:ring-1 hover:ring-white/20 md:hover:ring-0 md:hover:ring-transparent"
         style={{ backgroundColor: "#0a0a0a", minHeight: "120px" }}
         role="button"
         tabIndex={0}
         aria-label="Architecture diagram — click to enlarge"
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          if (typeof window !== "undefined" && window.innerWidth < 768)
+            setIsOpen(true);
+        }}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") setIsOpen(true);
+          if (
+            typeof window !== "undefined" &&
+            window.innerWidth < 768 &&
+            (e.key === "Enter" || e.key === " ")
+          )
+            setIsOpen(true);
         }}
       />
 
