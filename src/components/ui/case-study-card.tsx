@@ -2,11 +2,17 @@
 // Type: React Server Component
 // Renders a CaseStudy object with architecture badges, optional CodeBlock, MermaidDiagram,
 // and a SchematicTrigger (isolated client component for lightbox state).
+//
+// Performance: MermaidDiagram and ImageLightbox are dynamically imported (next/dynamic)
+// with ssr: false to defer their JS bundles from the initial page load payload.
+// Fallbacks are geometry-matched to prevent Cumulative Layout Shift (CLS).
 
 import type { CaseStudy, StackItem } from "@/types";
 import CodeBlock from "./code-block";
-import MermaidDiagram from "./mermaid-diagram";
 import SchematicTrigger from "./schematic-trigger";
+// MermaidDiagramLoader is a Client Component that wraps the dynamic import of MermaidDiagram.
+// `ssr: false` is not permitted in RSC files — the loader isolates that boundary.
+import MermaidDiagramLoader from "./mermaid-diagram-loader";
 
 // Default badge style — applied to all categories unless overridden
 const BADGE_DEFAULT = "border-white/20 text-white/70";
@@ -107,8 +113,10 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
         <CodeBlock code={study.codeSnippet} lang={study.codeLanguage} />
       )}
 
-      {/* Optional: Architecture diagram via MermaidDiagram (client component) */}
-      {study.mermaidGraph && <MermaidDiagram graph={study.mermaidGraph} />}
+      {/* Optional: Architecture diagram via MermaidDiagramLoader (deferred client component) */}
+      {study.mermaidGraph && (
+        <MermaidDiagramLoader graph={study.mermaidGraph} />
+      )}
     </article>
   );
 }
