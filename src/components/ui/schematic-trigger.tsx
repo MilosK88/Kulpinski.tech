@@ -7,12 +7,15 @@ interface SchematicTriggerProps {
   src: string;
   alt: string;
   title: string;
+  /** Button label text — should describe the specific schematic type */
+  label: string;
 }
 
 export default function SchematicTrigger({
   src,
   alt,
   title,
+  label,
 }: SchematicTriggerProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
@@ -20,11 +23,11 @@ export default function SchematicTrigger({
     <>
       <button
         onClick={() => setLightboxOpen(true)}
-        className="relative w-full rounded-sm border border-[#1A2E24] bg-[#0A0A0A] p-6 text-center group cursor-zoom-in"
+        className="relative w-full rounded-sm border border-border-accent bg-base p-6 text-center group cursor-zoom-in"
         aria-label={`View expanded schematic diagram for ${title}`}
       >
-        <span className="text-xs font-mono uppercase tracking-widest text-white/50 group-hover:text-[#6A9A77] transition-colors duration-300">
-          VIEW CONCURRENCY SCHEMATIC
+        <span className="text-xs font-mono uppercase tracking-widest text-white/50 group-hover:text-accent-hover transition-colors duration-300">
+          {label}
         </span>
       </button>
 

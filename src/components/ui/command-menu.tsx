@@ -27,10 +27,10 @@ export default function CommandMenu() {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center pt-[20vh]">
-      <div className="w-full max-w-xl bg-[#0A0A0A] border border-[#1A2E24] rounded-xl shadow-2xl overflow-hidden font-mono text-sm">
+      <div className="w-full max-w-xl bg-base border border-border-accent rounded-xl shadow-2xl overflow-hidden font-mono text-sm">
         <Command label="Command Menu" className="w-full" shouldFilter={true}>
-          <div className="px-3 border-b border-[#1A2E24] flex items-center">
-            <Terminal className="w-4 h-4 text-[#4A7C59] mr-2" />
+          <div className="px-3 border-b border-border-accent flex items-center">
+            <Terminal className="w-4 h-4 text-accent mr-2" />
             <Command.Input
               autoFocus
               placeholder="Type a command or search..."
@@ -52,14 +52,11 @@ export default function CommandMenu() {
             >
               <Command.Item
                 onSelect={() =>
-                  runCommand(
-                    () =>
-                      (window.location.href = "mailto:milos@kulpinski.tech"),
-                  )
+                  runCommand(() => window.open("mailto:milos@kulpinski.tech"))
                 }
-                className="flex items-center px-2 py-3 mt-1 text-white/70 hover:text-white rounded-md cursor-pointer aria-selected:bg-[#1A2E24] aria-selected:text-white transition-colors"
+                className="flex items-center px-2 py-3 mt-1 text-white/70 hover:text-white rounded-md cursor-pointer aria-selected:bg-border-accent aria-selected:text-white transition-colors"
               >
-                <Mail className="w-4 h-4 mr-3 text-[#4A7C59]" />
+                <Mail className="w-4 h-4 mr-3 text-accent" />
                 Initiate Handshake (Email)
               </Command.Item>
               <Command.Item
@@ -68,7 +65,7 @@ export default function CommandMenu() {
                     window.open("https://github.com/MilosK88", "_blank"),
                   )
                 }
-                className="flex items-center px-2 py-3 mt-1 text-white/70 hover:text-white rounded-md cursor-pointer aria-selected:bg-[#1A2E24] aria-selected:text-white transition-colors"
+                className="flex items-center px-2 py-3 mt-1 text-white/70 hover:text-white rounded-md cursor-pointer aria-selected:bg-border-accent aria-selected:text-white transition-colors"
               >
                 <Code className="w-4 h-4 mr-3 text-white/40" />
                 View GitHub Profile
@@ -77,7 +74,7 @@ export default function CommandMenu() {
 
             <Command.Group
               heading="ARCHITECTURE SCHEMATICS"
-              className="text-xs text-white/30 px-2 py-2 mb-1 border-t border-[#1A2E24]/50 mt-1"
+              className="text-xs text-white/30 px-2 py-2 mb-1 border-t border-border-accent/50 mt-1"
             >
               <Command.Item
                 onSelect={() =>
@@ -87,7 +84,7 @@ export default function CommandMenu() {
                       ?.scrollIntoView({ behavior: "smooth" }),
                   )
                 }
-                className="flex items-center px-2 py-3 mt-1 text-white/70 hover:text-white rounded-md cursor-pointer aria-selected:bg-[#1A2E24] aria-selected:text-white transition-colors"
+                className="flex items-center px-2 py-3 mt-1 text-white/70 hover:text-white rounded-md cursor-pointer aria-selected:bg-border-accent aria-selected:text-white transition-colors"
               >
                 <Server className="w-4 h-4 mr-3 text-white/40" />
                 B2B Multi-Tenant CRM
@@ -100,7 +97,7 @@ export default function CommandMenu() {
                       ?.scrollIntoView({ behavior: "smooth" }),
                   )
                 }
-                className="flex items-center px-2 py-3 mt-1 text-white/70 hover:text-white rounded-md cursor-pointer aria-selected:bg-[#1A2E24] aria-selected:text-white transition-colors"
+                className="flex items-center px-2 py-3 mt-1 text-white/70 hover:text-white rounded-md cursor-pointer aria-selected:bg-border-accent aria-selected:text-white transition-colors"
               >
                 <Activity className="w-4 h-4 mr-3 text-white/40" />
                 High-Concurrency Ticketing
@@ -113,7 +110,7 @@ export default function CommandMenu() {
                       ?.scrollIntoView({ behavior: "smooth" }),
                   )
                 }
-                className="flex items-center px-2 py-3 mt-1 text-white/70 hover:text-white rounded-md cursor-pointer aria-selected:bg-[#1A2E24] aria-selected:text-white transition-colors"
+                className="flex items-center px-2 py-3 mt-1 text-white/70 hover:text-white rounded-md cursor-pointer aria-selected:bg-border-accent aria-selected:text-white transition-colors"
               >
                 <Shield className="w-4 h-4 mr-3 text-white/40" />
                 Multi-Agent Orchestration

@@ -2,7 +2,7 @@
 
 ## 1. Architectural Boundaries
 
-- **Framework:** Next.js 15+ (App Router strictly).
+- **Framework:** Next.js 16.2.2 (App Router strictly). Do NOT use Next.js 15 APIs or conventions.
 - **RSC Default:** ALL components are React Server Components by default.
 - **Client Boundaries:** Any component utilizing `framer-motion`, `useState`, `useEffect`, or DOM events MUST be isolated in a separate file with the `"use client"` directive at line 1. NEVER pollute page layouts with client directives.
 - **Routing:** This is a Single Page Application (SPA). All content lives on `/`. Navigation relies on smooth-scroll anchor links.

@@ -15,7 +15,7 @@ import { TELEMETRY_LOGS, type TerminalLog } from "@/lib/content";
 const LEVEL_STYLES: Record<TerminalLog["level"], string> = {
   INFO: "text-white/50",
   WARN: "text-yellow-400/80",
-  SUCCESS: "text-[#4A7C59]",
+  SUCCESS: "text-accent",
   ERROR: "text-red-400/90",
 };
 
@@ -67,10 +67,7 @@ export default function TelemetryTerminal() {
   }, []); // Empty deps — runs once on mount
 
   return (
-    <div
-      className="flex flex-col rounded-sm border border-white/10 overflow-hidden"
-      style={{ backgroundColor: "#0D0D0D" }}
-    >
+    <div className="flex flex-col rounded-sm border border-white/10 overflow-hidden bg-surface-terminal">
       {/* Terminal header bar */}
       <div
         className="flex items-center gap-3 px-4 py-3 border-b border-white/10"

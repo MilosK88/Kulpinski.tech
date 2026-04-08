@@ -16,10 +16,7 @@ export default async function CodeBlock({ code, lang }: CodeBlockProps) {
   });
 
   return (
-    <div
-      className="relative rounded-sm border border-white/10 overflow-x-auto"
-      style={{ backgroundColor: "#121212" }}
-    >
+    <div className="relative rounded-sm border border-white/10 overflow-x-auto bg-surface-elevated">
       {/* Language badge */}
       <div className="flex items-center justify-between px-4 py-2 border-b border-white/10">
         <span

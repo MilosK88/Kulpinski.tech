@@ -6,7 +6,7 @@ import FadeIn from "@/components/ui/fade-in";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0A0A0A] selection:bg-white/20 text-white">
+    <main className="min-h-screen bg-base selection:bg-white/20 text-white">
       <div className="max-w-3xl mx-auto px-6 py-16 space-y-16">
         {/* HERO */}
         <section>
@@ -44,7 +44,7 @@ export default function Home() {
           className="relative py-24 md:py-32 z-0"
         >
           {/* THE GHOST SKEW (Force-rendered) */}
-          <div className="absolute inset-0 bg-[#0D1512] border-y border-[#1A2E24] -skew-y-1 md:-skew-y-3 origin-center scale-100 md:scale-[1.05] shadow-2xl -z-10 overflow-hidden" />
+          <div className="absolute inset-0 bg-surface-dark border-y border-border-accent -skew-y-1 md:-skew-y-3 origin-center scale-100 md:scale-[1.05] shadow-2xl -z-10 overflow-hidden" />
 
           {/* Un-skewed content container */}
           <div className="relative z-10 max-w-2xl mx-auto px-6">
@@ -63,7 +63,7 @@ export default function Home() {
         {/* GATEWAY */}
         <section className="relative z-20 pt-16">
           <FadeIn>
-            <div className="bg-white/[0.02] border border-[#1A2E24] p-8 rounded-sm">
+            <div className="bg-white/[0.02] border border-border-accent p-8 rounded-sm">
               <p className="text-xs text-white/30 font-mono uppercase tracking-widest mb-6">
                 // GATEWAY: ENGAGEMENT_PROTOCOL
               </p>
@@ -78,11 +78,11 @@ export default function Home() {
               </p>
               <a
                 href={GATEWAY_CONTENT.email}
-                className="inline-flex items-center gap-2 text-sm text-white hover:text-[#4A7C59] transition-colors mt-6 font-mono"
+                className="inline-flex items-center gap-2 text-sm text-white hover:text-accent transition-colors mt-6 font-mono"
               >
                 {GATEWAY_CONTENT.contactLabel}
               </a>
-              <p className="text-xs text-white/20 font-mono mt-6 pt-6 border-t border-[#1A2E24]">
+              <p className="text-xs text-white/20 font-mono mt-6 pt-6 border-t border-border-accent">
                 {GATEWAY_CONTENT.signature}
               </p>
             </div>

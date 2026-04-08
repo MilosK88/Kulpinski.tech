@@ -8,7 +8,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # SUPPLEMENTAL PROTOCOL: TECHNICAL DOSSIER
 
-**CRITICAL FRAMEWORK AWARENESS:** This environment is running **Next.js 16.2.2**. You MUST NOT rely on Next.js 15 training data.
+**CRITICAL FRAMEWORK AWARENESS:** This environment is running **Next.js 16.2.2** exactly. You MUST NOT rely on Next.js 15 or any prior training data. The version is pinned at `16.2.2` in `package.json`.
 **STEP 0 MANDATE:** Before writing any routing or rendering logic, you MUST read the local guides in `node_modules/next/dist/docs/` (specifically `single-page-applications.md`, `rendering-philosophy.md`, `instant-navigation.md`).
 
 ## Architectural Constraints

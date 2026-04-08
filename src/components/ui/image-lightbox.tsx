@@ -8,6 +8,7 @@
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { useScrollLock } from "@/hooks/useScrollLock";
 
 interface ImageLightboxProps {
   src: string;
@@ -35,16 +36,7 @@ export default function ImageLightbox({
   }, [isOpen, onClose]);
 
   // Prevent body scroll while open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+  useScrollLock(isOpen);
 
   return (
     <AnimatePresence>
@@ -66,7 +58,7 @@ export default function ImageLightbox({
           aria-label={`Expanded view: ${alt}`}
         >
           <motion.div
-            className="relative rounded-sm overflow-hidden border border-[#1A2E24] shadow-2xl bg-[#0D1512] w-[100vw] h-[100vh] md:w-[90vw] md:h-[90vh]"
+            className="relative rounded-sm overflow-hidden border border-border-accent shadow-2xl bg-surface-dark w-[100vw] h-[100vh] md:w-[90vw] md:h-[90vh]"
             initial={{ scale: 0.88, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.88, opacity: 0 }}

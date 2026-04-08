@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import CommandMenu from "@/components/ui/command-menu";
+import type { WithContext, Person } from "schema-dts";
 
 // Vercel Font Stack Initialization
 const geistSans = Geist({
@@ -31,8 +32,9 @@ export const metadata: Metadata = {
 /**
  * Phase 1: Entity SEO with Identity Resolution
  * Links the "Miloš Kulpinski" entity to high-authority professional nodes.
+ * Typed with schema-dts for compile-time JSON-LD validation.
  */
-const personSchema = {
+const personSchema: WithContext<Person> = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Miloš Kulpinski",
@@ -71,7 +73,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-[#0A0A0A] text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-base text-text`}
       >
         <CommandMenu />
         {children}

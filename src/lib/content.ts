@@ -1,28 +1,10 @@
-export interface StackItem {
-  name: string;
-  category: "runtime" | "database" | "queue" | "framework" | "ai" | "infra";
-}
+// src/lib/content.ts
+// All static content data for the Technical Dossier.
+// Types are imported from @/types — this file is data-only.
 
-export interface CaseStudy {
-  id: string;
-  title: string;
-  headline: string;
-  description: string;
-  architecture: StackItem[];
-  metric: string;
-  codeSnippet?: string;
-  codeLanguage?: string;
-  mermaidGraph?: string;
-}
+import type { CaseStudy, TerminalLog } from "@/types";
 
-export interface TerminalLog {
-  id: string;
-  timestamp: string;
-  agent: "ORCHESTRATOR" | "SCRAPER" | "VERIFIER" | "SYNTHESIZER";
-  level: "INFO" | "WARN" | "SUCCESS" | "ERROR";
-  message: string;
-  delayMs: number;
-}
+export type { StackItem, CaseStudy, TerminalLog } from "@/types";
 
 export const HERO_CONTENT = {
   name: "Miloš Kulpinski",
@@ -91,6 +73,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { name: "RBAC", category: "infra" },
     ],
     metric: "Eliminated 120+ hrs manual overhead",
+    schematicLabel: "VIEW SYSTEM SCHEMATIC",
     codeLanguage: "sql",
     codeSnippet: `-- Enterprise Multi-Tenant RLS Policy
 CREATE POLICY "Strict Tenant Isolation" 
@@ -115,6 +98,7 @@ USING (
       { name: "ACID", category: "infra" },
     ],
     metric: "Zero phantom seats under load",
+    schematicLabel: "VIEW CONCURRENCY SCHEMATIC",
     mermaidGraph: `sequenceDiagram
     participant C as Client
     participant Q as Redis Queue
@@ -158,6 +142,7 @@ USING (
       { name: "LLM Orchestration", category: "ai" },
     ],
     metric: "100% Fault Tolerance (Auto-Fallback Routing)",
+    schematicLabel: "VIEW ORCHESTRATION SCHEMATIC",
     mermaidGraph: `graph TD
     subgraph Client [External Request]
         A[API Route / Webhook]

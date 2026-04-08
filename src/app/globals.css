@@ -1,10 +1,19 @@
 @import "tailwindcss";
 
 @theme {
+  /* ── Base Palette ── */
   --color-base: #0a0a0a;
   --color-surface: #111111;
+  --color-surface-elevated: #121212;
+  --color-surface-terminal: #0d0d0d;
+  --color-surface-dark: #0d1512;
+  --color-border-accent: #1a2e24;
+  --color-accent: #4a7c59;
+  --color-accent-hover: #6a9a77;
   --color-muted: #888888;
   --color-text: #ededed;
+
+  /* ── Typography ── */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -17,6 +26,21 @@ pre.shiki {
 }
 
 @layer base {
+  /*
+   * Force-emit CSS variables that Tailwind v4's static scanner drops
+   * when tokens are defined in @theme but not yet referenced in scanned source.
+   * This guarantees all design tokens are available at :root regardless of
+   * scanner state, making semantic utility classes (bg-surface-dark, etc.) reliable.
+   */
+  :root {
+    --color-surface-dark: #0d1512;
+    --color-surface-elevated: #121212;
+    --color-surface-terminal: #0d0d0d;
+    --color-border-accent: #1a2e24;
+    --color-accent: #4a7c59;
+    --color-accent-hover: #6a9a77;
+  }
+
   body {
     background-color: var(--color-base);
     color: var(--color-text);

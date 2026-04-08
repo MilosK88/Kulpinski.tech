@@ -3,20 +3,22 @@
 // Renders a CaseStudy object with architecture badges, optional CodeBlock, MermaidDiagram,
 // and a SchematicTrigger (isolated client component for lightbox state).
 
-import type { CaseStudy, StackItem } from "@/lib/content";
+import type { CaseStudy, StackItem } from "@/types";
 import CodeBlock from "./code-block";
 import MermaidDiagram from "./mermaid-diagram";
 import SchematicTrigger from "./schematic-trigger";
 
-// Category → subtle accent color mapping (monochrome-first, with dim tints)
-const CATEGORY_STYLES: Record<StackItem["category"], string> = {
-  runtime: "border-white/20 text-white/70",
-  database: "border-white/20 text-white/70",
-  queue: "border-white/20 text-white/70",
-  framework: "border-white/20 text-white/70",
+// Default badge style — applied to all categories unless overridden
+const BADGE_DEFAULT = "border-white/20 text-white/70";
+
+// Category-specific overrides — only categories with distinct styling are listed
+const CATEGORY_OVERRIDES: Partial<Record<StackItem["category"], string>> = {
   ai: "border-white/30 text-white/80",
-  infra: "border-white/20 text-white/70",
 };
+
+function getBadgeStyle(category: StackItem["category"]): string {
+  return CATEGORY_OVERRIDES[category] ?? BADGE_DEFAULT;
+}
 
 // Schematic image mapping by study.id — keys must match CASE_STUDIES[n].id exactly
 // Note: lukul-system_schematic.png avoids ad-blocker false positives on "crm" string
@@ -35,7 +37,7 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
 
   return (
     <article
-      className="flex flex-col gap-6 rounded-sm border border-white/10 bg-[#111111] p-6"
+      className="flex flex-col gap-6 rounded-sm border border-white/10 bg-surface p-6"
       aria-labelledby={`case-study-title-${study.id}`}
     >
       {/* Header */}
@@ -48,7 +50,7 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
         </p>
         <h2
           id={`case-study-title-${study.id}`}
-          className="text-xl font-semibold text-[#ededed] leading-snug"
+          className="text-xl font-semibold text-text leading-snug"
         >
           {study.headline}
         </h2>
@@ -65,7 +67,7 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
           {study.architecture.map((item) => (
             <span
               key={item.name}
-              className={`inline-flex items-center rounded-full border px-3 py-0.5 text-xs ${CATEGORY_STYLES[item.category]}`}
+              className={`inline-flex items-center rounded-full border px-3 py-0.5 text-xs ${getBadgeStyle(item.category)}`}
               style={{ fontFamily: "var(--font-geist-mono)" }}
             >
               {item.name}
@@ -96,6 +98,7 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
           src={schematicSrc}
           alt={`${study.headline} architecture schematic`}
           title={study.title}
+          label={study.schematicLabel ?? "VIEW SCHEMATIC"}
         />
       )}
 

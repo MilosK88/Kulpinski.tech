@@ -8,6 +8,8 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useScrollLock } from "@/hooks/useScrollLock";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 interface MermaidDiagramProps {
   graph: string;
@@ -22,6 +24,12 @@ export default function MermaidDiagram({ graph }: MermaidDiagramProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [svgContent, setSvgContent] = useState<string>("");
   const [mounted, setMounted] = useState(false);
+
+  // Reactive media query — replaces imperative window.innerWidth checks
+  const isMobile = useMediaQuery("(max-width: 767px)");
+
+  // Prevent body scroll while lightbox is open
+  useScrollLock(isOpen);
 
   useEffect(() => {
     let cancelled = false;
@@ -96,39 +104,21 @@ export default function MermaidDiagram({ graph }: MermaidDiagramProps) {
     return () => document.removeEventListener("keydown", handleKey);
   }, [isOpen]);
 
-  // Prevent body scroll while lightbox is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
-
   return (
     <>
-      {/* Card thumbnail — scales naturally to container width, click to enlarge */}
+      {/* Card thumbnail — scales naturally to container width, click to enlarge on mobile */}
       <div
         ref={containerRef}
         className="w-full rounded-sm border border-white/10 p-4 cursor-pointer md:cursor-default transition-opacity hover:opacity-80 md:hover:opacity-100 hover:ring-1 hover:ring-white/20 md:hover:ring-0 md:hover:ring-transparent"
-        style={{ backgroundColor: "#0a0a0a", minHeight: "120px" }}
+        style={{ backgroundColor: "var(--color-base)", minHeight: "120px" }}
         role="button"
         tabIndex={0}
         aria-label="Architecture diagram — click to enlarge"
         onClick={() => {
-          if (typeof window !== "undefined" && window.innerWidth < 768)
-            setIsOpen(true);
+          if (isMobile) setIsOpen(true);
         }}
         onKeyDown={(e) => {
-          if (
-            typeof window !== "undefined" &&
-            window.innerWidth < 768 &&
-            (e.key === "Enter" || e.key === " ")
-          )
-            setIsOpen(true);
+          if (isMobile && (e.key === "Enter" || e.key === " ")) setIsOpen(true);
         }}
       />
 
@@ -154,7 +144,7 @@ export default function MermaidDiagram({ graph }: MermaidDiagramProps) {
                 aria-label="Expanded architecture diagram"
               >
                 <motion.div
-                  className="relative rounded-sm overflow-hidden border border-[#1A2E24] shadow-2xl bg-[#0D1512] w-[100vw] h-[100vh] md:w-[90vw] md:h-[90vh]"
+                  className="relative rounded-sm overflow-hidden border border-border-accent shadow-2xl bg-surface-dark w-[100vw] h-[100vh] md:w-[90vw] md:h-[90vh]"
                   initial={{ scale: 0.88, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.88, opacity: 0 }}
