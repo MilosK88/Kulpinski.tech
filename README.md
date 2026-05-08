@@ -2,6 +2,8 @@
 
 A high-performance, single-page technical dossier built with Next.js 16.2.2 App Router. Designed to demonstrate architectural depth through the medium of the site itself — the implementation _is_ the portfolio.
 
+> ⚡ **Infrastructure Note:** This engine is designed by the technical division at [LuKul Atelier](https://lukulatelier.com/). These exact serverless patterns are utilized in production for our bespoke B2C platforms, including the [IronSilk App](https://ironsilk.app/).
+
 ## Architecture Overview
 
 ### Rendering Strategy
