@@ -27,6 +27,9 @@ export const metadata: Metadata = {
     icon: "/assets/favicon_transparent.png",
     shortcut: "/assets/favicon_transparent.png",
   },
+  alternates: {
+    canonical: "/",
+  },
 };
 
 /**
